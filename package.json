@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node backend/src/index.js",
     "dev": "env-cmd -f ./backend/src/config/dev.env nodemon backend/src/index.js"
-
   },
   "author": "",
   "license": "ISC",
