@@ -1,113 +1,114 @@
-import Vue from 'vue'
-import  VueRouter from 'vue-router'
-import Register from '../views/Register.vue'
-import Login from '../views/Login.vue'
-import Logout from '../components/Logout.vue'
-import Home  from '../views/Home.vue'
-import Profile from "../views/Profile.vue"
-import Upload from "../views/Upload.vue"
-import Song from "../views/Song.vue"
-import Message from "../views/Message.vue"
-import Conversation from '../components/Conversation.vue'
-import Profiles from '../views/Profiles.vue'
-import Index from '../views/Index.vue'
-import store from '../store' 
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Register from "../views/Register.vue";
+import Login from "../views/Login.vue";
+import Logout from "../components/Logout.vue";
+import Home from "../views/Home.vue";
+import Profile from "../views/Profile.vue";
+import Upload from "../views/Upload.vue";
+import Song from "../views/Song.vue";
+import Message from "../views/Message.vue";
+import Conversation from "../components/Conversation.vue";
+import Profiles from "../views/Profiles.vue";
+import Index from "../views/Index.vue";
+import store from "../store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
+const routes = [
   {
-    path: '/',
-    name: 'Index',
-    component: Index
+    path: "/",
+    name: "Index",
+    component: Index,
   },
   {
-    path: '/tracks',
-    name: 'Home',
-    component: Home
+    path: "/tracks",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: Register
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
-    path: '/profile/:id',
-    name: 'Profile',
-    component: Profile
+    path: "/profile/:id",
+    name: "Profile",
+    component: Profile,
   },
   {
-    path: 'profile',
-    name: 'Profile',
-    component: Profile
+    path: "profile",
+    name: "Profile",
+    component: Profile,
   },
   {
-    path: '/users',
-    name: 'Profiles',
-    component: Profiles
+    path: "/users",
+    name: "Profiles",
+    component: Profiles,
   },
   {
-    path: '/song/:id',
-    name: 'Song',
-    component: Song
+    path: "/song/:id",
+    name: "Song",
+    component: Song,
   },
   {
-    path: '/upload',
-    name: 'Upload',
-    component: Upload
+    path: "/upload",
+    name: "Upload",
+    component: Upload,
   },
   {
-    path: '/logout',
-    name: 'Logout',
-    component: Logout
+    path: "/logout",
+    name: "Logout",
+    component: Logout,
   },
   {
-    path: '/message',
-    name: 'Message',
+    path: "/message",
+    name: "Message",
     component: Message,
-    children : [
+    children: [
       {
-        path: 'conversation/:id',
-        component: Conversation
-      }
-    ]
-  }
-]
+        path: "conversation/:id",
+        component: Conversation,
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
-bn  
+  routes,
+});
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' 
-  && to.name !== 'Register' 
-  && to.name !== 'Index' 
-  && to.name !== 'Song'  
-  && to.name !== 'Home'
-  && to.name !== 'Profiles'
-  && to.name !== 'Profile'
-  && !store.getters.isAuthenticated){
-    next({ name: 'Login' })
+  if (
+    to.name !== "Login" &&
+    to.name !== "Register" &&
+    to.name !== "Index" &&
+    to.name !== "Song" &&
+    to.name !== "Home" &&
+    to.name !== "Profiles" &&
+    to.name !== "Profile" &&
+    !store.getters.isAuthenticated
+  ) {
+    next({ name: "Login" });
   } else {
-    next()
+    next();
   }
-})
+});
 
-router.beforeEach((to,from,next) => {
-  if((store.getters.isAuthenticated && to.name === 'Login')) {
-   return next({ name: 'Home'})
-  } else if (store.getters.isAuthenticated && to.name === 'Register') {
-    return next({ name : 'Home'})
+router.beforeEach((to, from, next) => {
+  if (store.getters.isAuthenticated && to.name === "Login") {
+    return next({ name: "Home" });
+  } else if (store.getters.isAuthenticated && to.name === "Register") {
+    return next({ name: "Home" });
   }
 
-  next()
-})
+  next();
+});
 
-export default router
+export default router;
